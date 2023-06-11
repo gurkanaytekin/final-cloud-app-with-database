@@ -105,9 +105,13 @@ class Question(models.Model):
     # Foreign key to lesson
     # question text
     # question grade/mark
-    question_text = models.CharField(max_length=200, default="question_text")
-    grade = models.IntegerField(max_length=3, default="grade")
-    lesson_id = models.ManyToManyField(Course)
+    
+    lesson = models.ForeignKey(Lesson, on_delete=models.CASCADE)
+    # question text, char, max_length 300
+    question_text = models.CharField(max_length=300, default=" ")
+    # question grade/mark, integer defualt is 0
+    grade = models.IntegerField(default=0)
+
     # <HINT> A sample model method to calculate if learner get the score of the question
     def is_get_score(self, selected_ids):
         all_answers = self.choice_set.filter(is_correct=True).count()
